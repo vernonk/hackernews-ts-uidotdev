@@ -29,7 +29,6 @@ function userHandler(event: MouseEvent) {
   const { currentTarget } = event;
   const { hash } = currentTarget as HTMLAnchorElement;
   const userId = hash.split('#')[1];
-  console.log(userId);
   document.dispatchEvent(new CustomEvent('story:user', {
     detail: {
       id: userId,
