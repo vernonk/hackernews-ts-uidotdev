@@ -12,7 +12,7 @@ export interface Story {
   url: string;
 }
 
-function commentsHandler(event: MouseEvent) {
+function commentsHandler(event: MouseEvent, story: Story) {
   event.preventDefault();
   const { currentTarget } = event;
   const { hash } = currentTarget as HTMLAnchorElement;
@@ -20,6 +20,7 @@ function commentsHandler(event: MouseEvent) {
   document.dispatchEvent(new CustomEvent('story:comments', {
     detail: {
       id: storyId,
+      story,
     },
   }));
 }
@@ -36,8 +37,14 @@ function userHandler(event: MouseEvent) {
   }));
 }
 
-function createStory(story: Story) : HTMLLIElement {
-  const storyContainer = document.createElement('li');
+interface StoryOptions {
+  containerTag?: string;
+  titleHeading?: boolean;
+}
+
+export function createStory(story: Story, options: StoryOptions = {}) : HTMLElement {
+  const containerTag = options.containerTag || 'li';
+  const storyContainer = document.createElement(containerTag);
   storyContainer.classList.add('story');
   const storyTitle = document.createElement('a');
   storyTitle.classList.add('story-title');
@@ -59,7 +66,9 @@ function createStory(story: Story) : HTMLLIElement {
   comments.classList.add('story-comments');
   comments.href = `#${story.id}`;
   comments.textContent = `${story.descendants}`;
-  comments.addEventListener('click', commentsHandler);
+  comments.addEventListener('click', (e: MouseEvent) => {
+    commentsHandler(e, story);
+  });
   const commentsText = document.createTextNode(' comments');
   storyDetails.appendChild(byText);
   storyDetails.appendChild(storyAuthor);
@@ -67,7 +76,13 @@ function createStory(story: Story) : HTMLLIElement {
   storyDetails.appendChild(withText);
   storyDetails.appendChild(comments);
   storyDetails.appendChild(commentsText);
-  storyContainer.appendChild(storyTitle);
+  if (options.titleHeading) {
+    const storyHeading = document.createElement('h1');
+    storyHeading.appendChild(storyTitle);
+    storyContainer.appendChild(storyHeading);
+  } else {
+    storyContainer.appendChild(storyTitle);
+  }
   storyContainer.appendChild(storyDetails);
   return storyContainer;
 }
