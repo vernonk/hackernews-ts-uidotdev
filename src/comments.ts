@@ -1,6 +1,7 @@
 import type { Story } from './stories';
 import { createStory  } from './stories';
 import { getComments } from './api';
+import { formatDate } from './utils';
 
 export interface Comment {
   id: number;
@@ -21,7 +22,7 @@ function commentContainer(comment: Comment) {
   commentMeta.appendChild(commentAuthor);
   const commentTime = document.createElement('span');
   commentTime.classList.add('comment-time');
-  commentTime.textContent = ` on ${new Date(comment.time * 1000).toLocaleString()}`;
+  commentTime.textContent = ` on ${formatDate(comment.time)}`;
   commentMeta.appendChild(commentTime);
   container.appendChild(commentMeta);
   const commentText = document.createElement('div');

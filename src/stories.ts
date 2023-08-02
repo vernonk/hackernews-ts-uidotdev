@@ -1,4 +1,5 @@
 import { getNewStories, getStory, getTopStories } from './api';
+import { formatDate } from './utils';
 
 type StoryTypes = 'top' | 'new';
 
@@ -60,7 +61,7 @@ export function createStory(story: Story, options: StoryOptions = {}) : HTMLElem
   storyAuthor.addEventListener('click', userHandler);
   const storyTime = document.createElement('span');
   storyTime.classList.add('story-time');
-  storyTime.textContent = ` on ${new Date(story.time * 1000).toLocaleString()}`;
+  storyTime.textContent = ` on ${formatDate(story.time)}`;
   const withText = document.createTextNode(' with ');
   const comments = document.createElement('a');
   comments.classList.add('story-comments');
