@@ -11,6 +11,7 @@ export interface Story {
   time: number;
   title: string;
   url: string;
+  type?: string;
 }
 
 function commentsHandler(event: MouseEvent, story: Story) {

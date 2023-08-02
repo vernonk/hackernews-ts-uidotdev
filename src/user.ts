@@ -31,11 +31,12 @@ export default async function user(id: string) {
   userAbout.innerHTML = userData.about;
   const userStoriesContainer = document.createElement('div');
   userStoriesContainer.classList.add('user-stories');
+  const storyContainer = document.createElement('ul');
   userStories.forEach((story) => {
-    const storyContainer = document.createElement('ul');
     storyContainer.appendChild(createStory(story));
-    userStoriesContainer.appendChild(storyContainer);
   });
+  userStoriesContainer.appendChild(storyContainer);
+  
   container.appendChild(userContainer);
   userContainer.appendChild(userMeta);
   userMeta.appendChild(username);

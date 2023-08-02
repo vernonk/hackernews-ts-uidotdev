@@ -1,7 +1,7 @@
 import type { Story } from './stories';
 import type { Comment } from './comments';
 
-const MAX_STORIES = 30;
+const MAX_STORIES = 50;
 const ITEM_ENDPOINT_SUFFIX = '.json?print=pretty';
 const NEW_STORIES_ENDPOINT = 'https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty';
 const TOP_STORIES_ENDPOINT = 'https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty';
@@ -46,7 +46,7 @@ export const getUser = async (id: string) => {
 export const getUserStories = async (stories: number[]): Promise<Story[]> => {
   const storyIds = stories.slice(0, MAX_STORIES);
   const storiesData = await Promise.all(storyIds.map(getStory));
-  return storiesData;
+  return storiesData.filter(story => story.type === 'story');
 };
 
 export const getComment = async (id: number): Promise<Comment> => {
