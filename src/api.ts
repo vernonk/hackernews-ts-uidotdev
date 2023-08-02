@@ -43,6 +43,12 @@ export const getUser = async (id: string) => {
   return user;
 };
 
+export const getUserStories = async (stories: number[]): Promise<Story[]> => {
+  const storyIds = stories.slice(0, MAX_STORIES);
+  const storiesData = await Promise.all(storyIds.map(getStory));
+  return storiesData;
+};
+
 export const getComment = async (id: number): Promise<Comment> => {
   const response = await fetch(`${COMMENT_ITEM_ENDPOINT}${id}${ITEM_ENDPOINT_SUFFIX}`);
   const comment = await response.json();
