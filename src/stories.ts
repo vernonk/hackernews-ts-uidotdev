@@ -52,7 +52,7 @@ export function createStory(story: Story, options: StoryOptions = {}) : HTMLElem
   storyTitle.classList.add('story-title');
   storyTitle.href = story.url;
   storyTitle.textContent = story.title;
-  const storyDetails = document.createElement('p');
+  const storyDetails = document.createElement('div');
   storyDetails.classList.add('story-details');
   const byText = document.createTextNode('by ');
   const storyAuthor = document.createElement('a');
